@@ -13,6 +13,10 @@ $exhangeRates = Invoke-RestMethod -Uri $apiCall
 
 $totalAmount = 0
 for ($i=0; $i -lt ($amount.Length - 1); $i++) {
-    $totalAmount += (([int]$amount[$i]) * (1/[decimal](($exhangeRates.rates | Select -ExpandProperty $currency[$i]) -replace ',','.')))
+    if( $resultAs -eq $currency[$i]) {
+        $totalAmount += $amount[$i]
+    } else {
+        $totalAmount += (([int]$amount[$i]) * (1/[decimal](($exhangeRates.rates | Select -ExpandProperty $currency[$i]) -replace ',','.')))
+    }
 }
 write-host "Amount in total is" ([math]::Round($totalAmount, 2)) "$resultAs."
