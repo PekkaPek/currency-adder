@@ -6,6 +6,11 @@ for ($i=0; $i -lt ($args.Length - 1); $i++) {
     $amount[$i] = $args[$i+1] -replace "[^0-9]" , ''
     $currency[$i] = $args[$i+1] -replace '[^a-zA-Z-]',''
 }
+Write-Host "Converting the following amounts to $resultAs..."
+Foreach($a in ($args | select -Skip 1)) {
+    Write-Host $a
+}
+Write-Host "-----------------------------------------------"
 
 [string]$apiCall = "https://api.exchangeratesapi.io/latest" + "?base=" + $resultAs
     
