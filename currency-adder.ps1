@@ -2,9 +2,9 @@
 $amount = @(0) * ($args.Length - 1)
 $currency = @(0) * ($args.Length  - 1)
 
-for ($i=1; $i -lt $args.Length; $i++) {
-    $amount[$i-1] = $args[$i] -replace "[^0-9]" , ''
-    $currency[$i-1] = $args[$i] -replace '[^a-zA-Z-]',''
+for ($i=0; $i -lt ($args.Length - 1); $i++) {
+    $amount[$i] = $args[$i+1] -replace "[^0-9]" , ''
+    $currency[$i] = $args[$i+1] -replace '[^a-zA-Z-]',''
 }
 
 [string]$apiCall = "https://api.exchangeratesapi.io/latest" + "?base=" + $resultAs
