@@ -16,7 +16,9 @@ for ($i=0; $i -lt $amount.Length; $i++) {
     if( $resultAs -eq $currency[$i]) {
         $totalAmount += $amount[$i]
     } else {
-        $totalAmount += (([int]$amount[$i]) * (1/[decimal](($exhangeRates.rates | Select -ExpandProperty $currency[$i]) -replace ',','.')))
+        $exchangeRateFormatted = [decimal](($exhangeRates.rates | Select -ExpandProperty $currency[$i]) -replace ',','.')
+        $resultCurrencyMultiplier = 1 / $exchangeRateFormatted
+        $totalAmount += [int]$amount[$i] * $resultCurrencyMultiplier
     }
 }
 write-host "Amount in total is" ([math]::Round($totalAmount, 2)) "$resultAs."
