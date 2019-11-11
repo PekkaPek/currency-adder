@@ -3,7 +3,7 @@ $amount = @(0) * ($args.Length - 1)
 $currency = @(0) * ($args.Length  - 1)
 
 for ($i=0; $i -lt ($args.Length - 1); $i++) {
-    $amount[$i] = $args[$i+1] -replace "[^0-9]" , ''
+    $amount[$i] = $args[$i+1] -replace "[^0-9.]" , ''
     $currency[$i] = $args[$i+1] -replace '[^a-zA-Z-]',''
 }
 Write-Host "Converting the following amounts to $resultAs..."
@@ -23,7 +23,7 @@ for ($i=0; $i -lt $amount.Length; $i++) {
     } else {
         $exchangeRateFormatted = [decimal](($exhangeRates.rates | Select -ExpandProperty $currency[$i]) -replace ',','.')
         $resultCurrencyMultiplier = 1 / $exchangeRateFormatted
-        $totalAmount += [int]$amount[$i] * $resultCurrencyMultiplier
+        $totalAmount += [decimal]$amount[$i] * $resultCurrencyMultiplier
     }
 }
 write-host "Amount in total is" ([math]::Round($totalAmount, 2)) "$resultAs."
